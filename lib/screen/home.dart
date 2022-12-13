@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:grocery/model/CategoryDataModel.dart';
 import 'package:grocery/screen/submenu.dart';
 import 'package:grocery/utils/next_screen.dart';
 
@@ -12,6 +13,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<CategoryItem> items = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    items.addAll(CategoryDataModel.categoryitems);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -149,59 +158,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 Container(height: 150,
                   margin: const EdgeInsets.only(left: 10),
                   width: MediaQuery.of(context).size.width,
-                  child: ListView(shrinkWrap: true,scrollDirection: Axis.horizontal,children: [
-                    Container(
-                      margin: const EdgeInsets.only(top: 20),
-                      width:160,
-                      height: 150,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          color: Color(0xffd6e7fc),
-                          borderRadius: BorderRadius.circular(20.0)
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.only(left: 25),
-                            child: Image.asset("assets/images/icons/meaticon.png",height: 90,),),
-
-//meaticon
-                          Container(
-                            margin: const EdgeInsets.only(bottom: 15,left: 5),
-                            child: Text("Meat",style:
-                            Theme.of(context).textTheme.bodyText1),)
-
-                        ],
-                      ),),
-                    Container(
-                      margin: const EdgeInsets.only(top: 20,left: 5),
-                      width:160,
-                      height: 150,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          color: Color(0xffd6e7fc),
-                          borderRadius: BorderRadius.circular(20.0)
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.only(left: 25),
-                            child: Image.asset("assets/images/icons/fishicon.png",height: 90,),),
-
-//meaticon
-                          Container(
-                            margin: const EdgeInsets.only(bottom: 15,left: 15),
-                            child: Text("Fish",style:
-                            Theme.of(context).textTheme.bodyText1),)
-
-                        ],
-                      ),),
-                    InkWell(onTap: (){
-                      nextScreen(context, SubMenuScreen());
+                  child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: items.length,
+                      itemBuilder: (context, index) {
+                        CategoryItem itemsnew = items[index];
+                    return InkWell(onTap: (){
+                      nextScreen(context, SubMenuScreen(title: itemsnew.title,categoryId: itemsnew.id,url: itemsnew.status,));
 
                     },child: Container(
                       margin: const EdgeInsets.only(top: 20,left: 5),
@@ -217,19 +180,21 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
+                            alignment: Alignment.topRight,
                             margin: const EdgeInsets.only(left: 25),
-                            child: Image.asset("assets/images/icons/appleicon.png",height: 90,),),
+                            child: Image.asset(itemsnew.image,height: 90,),),
 
 //meaticon
                           Container(
-                            margin: const EdgeInsets.only(bottom: 15),
-                            child: Text("Vegetables",style:
+                            alignment: Alignment.topLeft,
+                            margin: const EdgeInsets.only(bottom: 15,left: 15),
+                            child: Text(itemsnew.title,style:
                             Theme.of(context).textTheme.bodyText1),)
 
                         ],
-                      ),),),
-
-                  ],),),
+                      ),),);
+                  })
+                  ),
 
 
                 SizedBox(height: 25,),
@@ -453,33 +418,46 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
                   ],),),
+
+
+
+
+
+                SizedBox(height: 25,),
+                Row(children: [
+                  SizedBox(width: 40,),
+                  Text("Recommended",style:
+                  Theme.of(context).textTheme.headline4),
+                  SizedBox(width: 10,),
+                  Icon(Icons.arrow_forward_ios,color: Color(0xff202e55),size: 15,)
+                ],),
               ],
             ),
           
-            Container(width: MediaQuery.of(context).size.width,
-              margin: const EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                Image.asset("assets/images/icons/homeicon.png",height: 25),
-
-                  Image.asset("assets/images/icons/cafeicon.png",height: 25),
-
-                  Container(
-                    height: 70,
-                    width: 60,
-                    padding: const EdgeInsets.all(15),
-                    decoration:BoxDecoration(color:Color(0xff6976df),   borderRadius: BorderRadius.circular(25.0),),
-                    child: Image.asset("assets/images/icons/bucketicon.png",height: 20,width: 20,),),
-
-
-                  Image.asset("assets/images/icons/noteicon.png",height: 25),
-
-                  InkWell(onTap: (){
-
-                  },child: Image.asset("assets/images/icons/usericon.png",height: 25),)
-
-              ],),)
+            // Container(width: MediaQuery.of(context).size.width,
+            //   margin: const EdgeInsets.symmetric(horizontal: 20),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     children: [
+            //     Image.asset("assets/images/icons/homeicon.png",height: 25),
+            //
+            //       Image.asset("assets/images/icons/cafeicon.png",height: 25),
+            //
+            //       Container(
+            //         height: 70,
+            //         width: 60,
+            //         padding: const EdgeInsets.all(15),
+            //         decoration:BoxDecoration(color:Color(0xff6976df),   borderRadius: BorderRadius.circular(25.0),),
+            //         child: Image.asset("assets/images/icons/bucketicon.png",height: 20,width: 20,),),
+            //
+            //
+            //       Image.asset("assets/images/icons/noteicon.png",height: 25),
+            //
+            //       InkWell(onTap: (){
+            //
+            //       },child: Image.asset("assets/images/icons/usericon.png",height: 25),)
+            //
+            //   ],),)
         ],),
       ),
     );

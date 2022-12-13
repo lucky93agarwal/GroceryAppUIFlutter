@@ -93,6 +93,7 @@ flutter:
     - assets/images/account/
     - assets/images/icons/
     - assets/images/icons/iconappbar.png
+    - assets/images/icons/tomatoes.png
     - assets/translations/
     - assets/animation_files/
 
